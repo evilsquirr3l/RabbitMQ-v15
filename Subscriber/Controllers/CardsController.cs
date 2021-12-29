@@ -1,13 +1,12 @@
 using Subscriber.Models;
-
-namespace Subscriber.Controllers;
-
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+
+namespace Subscriber.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -55,7 +54,6 @@ public class CardsController : ControllerBase
         };
 
         model.BasicConsume(_configuration.QueueName, true, consumer);
-
     }
     void SendToDb(string message)
     {
