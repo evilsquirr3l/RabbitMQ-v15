@@ -19,7 +19,7 @@ public class CardsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateGun(OldCard card)
+    public IActionResult CreateCard(OldCard card)
     {
         ValidateModel(card);
         PublishMessage(JsonConvert.SerializeObject(card));
@@ -40,7 +40,7 @@ public class CardsController : ControllerBase
         }
     }
 
-    private void PublishMessage(string gun)
+    private void PublishMessage(string card)
     {
         var factory = new ConnectionFactory
         {
@@ -54,7 +54,7 @@ public class CardsController : ControllerBase
 
         model.QueueDeclare(_configuration.QueueName, false, false, false, null);
 
-        var body = Encoding.UTF8.GetBytes(gun);
+        var body = Encoding.UTF8.GetBytes(card);
 
         model.BasicPublish(string.Empty, _configuration.QueueName, null, body);
     }
